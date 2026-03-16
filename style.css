@@ -213,9 +213,16 @@ body{background:var(--dark);font-family:'Exo 2',sans-serif;color:var(--text);min
 .toggle.on{background:rgba(200,168,75,0.3);border-color:var(--gold)}
 .toggle.on::after{left:20px;background:var(--gold)}
 
+/* HAMBURGUER */
+.hamburger{display:none;background:transparent;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;margin-right:4px;z-index:1;line-height:1}
+.sidebar-overlay-mobile{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:98}
+.sidebar-overlay-mobile.show{display:block}
+
 /* RESPONSIVO */
 @media(max-width:768px){
-  .sidebar{display:none}
+  .hamburger{display:block}
+  .sidebar{display:none;position:fixed;top:64px;left:0;height:calc(100vh - 64px);z-index:99;width:240px;overflow-y:auto}
+  .sidebar.open{display:flex}
   .concurso-badge{display:none}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .two-col{grid-template-columns:1fr}
