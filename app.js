@@ -67,10 +67,35 @@ const DIAS_DATA = [
 
 // ── QUESTÕES ────────────────────────────────────────────
 const QUESTOES = [
+  // DIREITO TRIBUTÁRIO
   {id:1,texto:'Segundo o CTN, a obrigação tributária principal surge com a ocorrência do fato gerador. A obrigação acessória:',alternativas:['A) Tem por objeto o pagamento de tributo.','B) Decorre da legislação e tem por objeto prestações positivas ou negativas nela previstas.','C) Independe da obrigação principal.','D) Não pode ser convertida em obrigação principal.','E) É sempre de natureza pecuniária.'],correta:1,comentario:'Art. 113 do CTN: a obrigação acessória decorre da legislação tributária. Sua inobservância converte-se em obrigação principal quanto à penalidade.',materia:'Direito Tributário',banca:'CEBRASPE',ano:'2023',dif:'Médio',difClass:'badge-medio'},
   {id:2,texto:'O princípio da legalidade tributária (art. 150, I, CF/88) veda à União, Estados, DF e Municípios:',alternativas:['A) Exigir ou aumentar tributo sem lei que o estabeleça.','B) Cobrar tributos antes de 90 dias da publicação da lei.','C) Instituir tratamento desigual entre contribuintes.','D) Utilizar tributo com efeito de confisco.','E) Limitar o tráfego de pessoas por tributos.'],correta:0,comentario:'Art. 150, I, CF veda exigir ou aumentar tributo sem lei. É a principal limitação constitucional ao poder de tributar.',materia:'Direito Tributário',banca:'ESAF',ano:'2022',dif:'Fácil',difClass:'badge-facil'},
+  {id:5,texto:'Sobre o lançamento tributário, é correto afirmar que:',alternativas:['A) Pode ser alterado de ofício pela autoridade administrativa a qualquer tempo.','B) É o procedimento pelo qual se verifica a ocorrência do fato gerador e se determina a matéria tributável.','C) Independe de prévia previsão legal.','D) Produz efeitos constitutivos da obrigação tributária.','E) Pode ser feito pelo contribuinte sem qualquer homologação.'],correta:1,comentario:'O lançamento é o procedimento administrativo que verifica a ocorrência do fato gerador, determina a matéria tributável, calcula o tributo e identifica o sujeito passivo (art. 142, CTN).',materia:'Direito Tributário',banca:'FGV',ano:'2022',dif:'Difícil',difClass:'badge-dificil'},
+  // CONTABILIDADE GERAL
   {id:3,texto:'O patrimônio líquido de uma entidade é composto por:',alternativas:['A) Apenas o capital social integralizado.','B) Capital social, reservas de capital, reservas de lucros, ações em tesouraria e prejuízos acumulados.','C) Somente ativos circulantes deduzidos dos passivos circulantes.','D) Capital social e reservas de lucros apenas.','E) Ativo total menos passivo não circulante.'],correta:1,comentario:'O PL é formado por capital social, reservas de capital, ajustes de avaliação patrimonial, reservas de lucros, ações em tesouraria e prejuízos acumulados (art. 178 da Lei 6.404/76).',materia:'Contabilidade Geral',banca:'FGV',ano:'2022',dif:'Fácil',difClass:'badge-facil'},
+  {id:6,texto:'Na Demonstração do Resultado do Exercício (DRE), o lucro bruto é obtido pela diferença entre:',alternativas:['A) Receita líquida e despesas operacionais.','B) Receita bruta e deduções.','C) Receita líquida e custo das mercadorias vendidas.','D) Lucro operacional e resultado financeiro.','E) Receita bruta e custo das mercadorias vendidas.'],correta:2,comentario:'Lucro bruto = Receita Líquida (receita bruta menos deduções) menos CMV/CPV. É a primeira linha de resultado da DRE.',materia:'Contabilidade Geral',banca:'CEBRASPE',ano:'2023',dif:'Fácil',difClass:'badge-facil'},
+  {id:7,texto:'O método de depreciação linear (quotas constantes) caracteriza-se por:',alternativas:['A) Depreciar mais no início da vida útil do bem.','B) Depreciar menos no início da vida útil do bem.','C) Distribuir o custo do bem em quotas iguais ao longo da vida útil.','D) Variar conforme a produção do bem.','E) Ser aplicado apenas a bens imóveis.'],correta:2,comentario:'No método linear, a quota de depreciação é constante: (Custo - Valor Residual) / Vida Útil. É o método mais utilizado e aceito pela legislação fiscal.',materia:'Contabilidade Geral',banca:'FCC',ano:'2022',dif:'Fácil',difClass:'badge-facil'},
+  // LEGISLAÇÃO ADUANEIRA
   {id:4,texto:'Segundo o Decreto 6.759/09 (Regulamento Aduaneiro), zona primária é:',alternativas:['A) Todo o território nacional.','B) Área terrestre ou aquática, contínua ou descontínua, nos portos alfandegados.','C) Apenas os aeroportos internacionais.','D) A faixa de fronteira de 150km.','E) Os recintos alfandegados do interior.'],correta:1,comentario:'Zona primária é a área terrestre ou aquática nos portos alfandegados, a área terrestre nos aeroportos alfandegados e os pontos de fronteira alfandegados.',materia:'Legislação Aduaneira',banca:'CEBRASPE',ano:'2023',dif:'Médio',difClass:'badge-medio'},
+  {id:8,texto:'No despacho aduaneiro de importação, a parametrização verde indica que:',alternativas:['A) A mercadoria será submetida a exame documental e físico.','B) O desembaraço é automático, sem exame documental ou físico.','C) Apenas o exame documental será realizado.','D) A mercadoria está sujeita a análise de valor aduaneiro.','E) O despacho foi cancelado.'],correta:1,comentario:'O canal verde significa desembaraço automático: a declaração de importação é registrada e o desembaraço ocorre sem exame documental ou físico da mercadoria.',materia:'Legislação Aduaneira',banca:'ESAF',ano:'2022',dif:'Médio',difClass:'badge-medio'},
+  // LEGISLAÇÃO TRIBUTÁRIA
+  {id:9,texto:'Sobre o Simples Nacional, é correto afirmar que:',alternativas:['A) Abrange apenas o IRPJ e a CSLL.','B) É um regime tributário exclusivo para microempresas com faturamento até R$ 360.000,00.','C) É um regime simplificado que unifica o recolhimento de vários tributos federais, estaduais e municipais.','D) Não inclui o INSS patronal.','E) É obrigatório para todas as microempresas.'],correta:2,comentario:'O Simples Nacional é um regime compartilhado de arrecadação que engloba tributos federais (IRPJ, CSLL, PIS, COFINS, IPI, CPP), estaduais (ICMS) e municipais (ISS) numa única guia.',materia:'Legislação Tributária',banca:'FGV',ano:'2023',dif:'Médio',difClass:'badge-medio'},
+  {id:10,texto:'O PIS e a COFINS no regime não cumulativo incidem sobre:',alternativas:['A) O faturamento bruto sem qualquer dedução.','B) A receita bruta, permitindo o desconto de créditos de determinadas aquisições.','C) Apenas as receitas financeiras das empresas.','D) O lucro líquido apurado no período.','E) A folha de pagamento das empresas.'],correta:1,comentario:'No regime não cumulativo (Lei 10.637/02 e 10.833/03), o PIS/COFINS incide sobre a receita bruta mas permite o desconto de créditos calculados sobre insumos, bens para revenda, entre outros.',materia:'Legislação Tributária',banca:'CEBRASPE',ano:'2022',dif:'Difícil',difClass:'badge-dificil'},
+  // DIREITO CONSTITUCIONAL
+  {id:11,texto:'Segundo o art. 37 da CF/88, a administração pública obedece aos princípios de:',alternativas:['A) Legalidade, impessoalidade, moralidade, publicidade e eficiência.','B) Legalidade, pessoalidade, moralidade e publicidade.','C) Legitimidade, impessoalidade, moralidade e publicidade.','D) Legalidade, impessoalidade, moralidade e razoabilidade.','E) Legalidade, impessoalidade, motivação, publicidade e eficiência.'],correta:0,comentario:'O art. 37, caput, da CF/88 estabelece os cinco princípios: LIMPE — Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (este último inserido pela EC 19/98).',materia:'Direito Constitucional',banca:'CEBRASPE',ano:'2023',dif:'Fácil',difClass:'badge-facil'},
+  {id:12,texto:'Sobre os direitos e garantias fundamentais da CF/88, é correto afirmar que:',alternativas:['A) São absolutos e não admitem restrições.','B) São aplicáveis apenas aos brasileiros natos.','C) Não excluem outros decorrentes do regime e dos princípios adotados pela Constituição.','D) Só produzem efeitos após regulamentação por lei ordinária.','E) São taxativos e enumerados exaustivamente no art. 5º.'],correta:2,comentario:'O §2º do art. 5º da CF/88 dispõe que os direitos e garantias expressos não excluem outros decorrentes do regime e dos princípios da Constituição ou dos tratados internacionais.',materia:'Direito Constitucional',banca:'FGV',ano:'2022',dif:'Médio',difClass:'badge-medio'},
+  // DIREITO ADMINISTRATIVO
+  {id:13,texto:'O ato administrativo vinculado caracteriza-se por:',alternativas:['A) Ampla liberdade de escolha do agente quanto ao conteúdo e à forma.','B) Inexistência de previsão legal para sua prática.','C) Obrigatoriedade de observância de todos os requisitos estabelecidos em lei, sem margem de escolha.','D) Possibilidade de análise de conveniência e oportunidade pelo agente.','E) Ausência de controle judicial.'],correta:2,comentario:'No ato vinculado, a lei não deixa opção ao administrador: presentes os requisitos legais, a autoridade é obrigada a praticar o ato nos exatos termos previstos, sem análise de mérito.',materia:'Direito Administrativo',banca:'ESAF',ano:'2022',dif:'Médio',difClass:'badge-medio'},
+  // RACIOCÍNIO LÓGICO
+  {id:14,texto:'Se a proposição "Todo concurseiro estuda muito" é verdadeira, podemos concluir que:',alternativas:['A) Quem não estuda muito não é concurseiro.','B) Quem estuda muito é concurseiro.','C) Alguns concurseiros não estudam muito.','D) Nenhum concurseiro deixa de estudar muito.','E) Alternativas A e D estão corretas.'],correta:4,comentario:'De "Todo A é B" (Todo concurseiro estuda muito), podemos concluir: (A) se não-B então não-A (contrapositiva) e (D) não existe A que não seja B. Ambas são equivalentes à proposição original.',materia:'Raciocínio Lógico Quantitativo',banca:'CEBRASPE',ano:'2023',dif:'Médio',difClass:'badge-medio'},
+  // LÍNGUA PORTUGUESA
+  {id:15,texto:'Assinale a alternativa em que a concordância verbal está correta:',alternativas:['A) Faz dois anos que não nos vemos.','B) Fazem dois anos que não nos vemos.','C) Havia muitas pessoas na fila, disseram os presentes.','D) Houveram muitos problemas na reunião.','E) Existem uma solução para cada problema.'],correta:0,comentario:'"Faz" e "há" indicativos de tempo são impessoais e ficam no singular. "Faz dois anos" está correto. "Fazem" seria erro. "Houveram" e "existem uma" também são erros de concordância.',materia:'Língua Portuguesa',banca:'FGV',ano:'2022',dif:'Médio',difClass:'badge-medio'},
+  // ADMINISTRAÇÃO GERAL E PÚBLICA
+  {id:16,texto:'As funções administrativas clássicas definidas por Fayol são:',alternativas:['A) Planejar, organizar, comandar, coordenar e controlar.','B) Planejar, executar, verificar e agir.','C) Planejar, organizar, liderar e controlar.','D) Missão, visão, valores e estratégia.','E) Entrada, processamento, saída e retroalimentação.'],correta:0,comentario:'Henri Fayol definiu as 5 funções da administração: Prever/Planejar, Organizar, Comandar, Coordenar e Controlar — base da Teoria Clássica da Administração.',materia:'Administração Geral e Pública',banca:'CEBRASPE',ano:'2022',dif:'Fácil',difClass:'badge-facil'},
+  // COMÉRCIO INTERNACIONAL
+  {id:17,texto:'O Incoterm CIF (Cost, Insurance and Freight) significa que:',alternativas:['A) O vendedor paga apenas o frete até o porto de destino.','B) O comprador é responsável por todos os custos desde a origem.','C) O vendedor é responsável pelo custo, seguro e frete até o porto de destino indicado.','D) A responsabilidade do vendedor termina quando a mercadoria é entregue no armazém do comprador.','E) O risco passa ao comprador apenas no porto de destino.'],correta:2,comentario:'No CIF, o vendedor assume o custo da mercadoria, o frete marítimo e o seguro até o porto de destino. O risco, porém, passa ao comprador quando a mercadoria é entregue ao transportador no porto de origem.',materia:'Comércio Internacional',banca:'FGV',ano:'2023',dif:'Médio',difClass:'badge-medio'},
+  // INGLÊS / ESPANHOL
+  {id:18,texto:'In the sentence "The tax reform, which was approved last year, has generated significant changes", the underlined clause is:',alternativas:['A) A restrictive relative clause identifying which reform.','B) A non-restrictive relative clause adding extra information.','C) An adverbial clause of time.','D) A noun clause functioning as subject.','E) A conditional clause.'],correta:1,comentario:'The clause "which was approved last year" is non-restrictive (note the commas) — it adds extra information about the tax reform without being essential to identify it. Non-restrictive clauses use commas.',materia:'Inglês / Espanhol',banca:'CEBRASPE',ano:'2022',dif:'Difícil',difClass:'badge-dificil'},
 ];
 
 // ── HELPERS ─────────────────────────────────────────────
@@ -93,12 +118,27 @@ function resetTudo() {
   location.reload();
 }
 
+function toggleMenu() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay-mobile');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+}
+
+function fecharMenuMobile() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay-mobile');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+
 // ── NAVEGAÇÃO ────────────────────────────────────────────
 function navTo(page, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   if (el) el.classList.add('active');
+  fecharMenuMobile();
   renderPage(page);
 }
 
@@ -405,7 +445,21 @@ function setModo(m, el) {
 }
 
 function iniciarQuestoes() {
-  STATE.questoes = [...QUESTOES];
+  const mat = document.getElementById('f-mat').value;
+  const banca = document.getElementById('f-banca').value;
+  const dif = document.getElementById('f-dif').value;
+  const ano = document.getElementById('f-ano').value;
+  STATE.questoes = QUESTOES.filter(q => {
+    if (mat && mat !== 'Todas' && q.materia !== mat) return false;
+    if (banca && banca !== 'Todas' && q.banca !== banca) return false;
+    if (dif && dif !== 'Todas' && q.dif !== dif) return false;
+    if (ano && ano !== 'Todos' && q.ano !== ano) return false;
+    return true;
+  });
+  if (STATE.questoes.length === 0) {
+    alert('Nenhuma questão encontrada com esses filtros. Tente outros filtros!');
+    return;
+  }
   STATE.questaoIdx = 0; STATE.corretas = 0; STATE.erradas = 0;
   carregarQuestao();
   resetTimer(); startTimer();
