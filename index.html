@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0A2A6E">
+<title>StudyChaves — Analista Tributário RF</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-emblem">SC</div>
+    <div>
+      <div class="logo-text">STUDYCHAVES</div>
+      <span class="logo-sub">plataforma de estudos</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="concurso-badge">ANALISTA TRIBUTÁRIO — RECEITA FEDERAL</div>
+    <div class="avatar">TH</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="sidebar-bg"></div>
+    <div class="sidebar-overlay"></div>
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="navTo('dashboard',this)"><span class="nav-icon">⌂</span> Dashboard</div>
+    <div class="nav-item" onclick="navTo('cronograma',this)"><span class="nav-icon">◎</span> Cronograma</div>
+    <div class="nav-item" onclick="navTo('tarefas',this)"><span class="nav-icon">✓</span> Tarefas do Dia</div>
+    <div class="nav-section">Conteúdo</div>
+    <div class="nav-item" onclick="navTo('materias',this)"><span class="nav-icon">▤</span> Matérias</div>
+    <div class="nav-item" onclick="navTo('questoes',this)"><span class="nav-icon">?</span> Questões</div>
+    <div class="nav-item" onclick="navTo('legislacao',this)"><span class="nav-icon">§</span> Legislação</div>
+    <div class="nav-item" onclick="navTo('upload',this)"><span class="nav-icon">↑</span> Upload PDFs</div>
+    <div class="nav-section">Análise</div>
+    <div class="nav-item" onclick="navTo('graficos',this)"><span class="nav-icon">◈</span> Gráficos</div>
+    <div class="nav-item" onclick="navTo('config',this)"><span class="nav-icon">⚙</span> Configurações</div>
+    <div class="sidebar-bottom">
+      <div class="progress-label">Progresso Geral</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-geral" style="width:0%"></div></div>
+      <div class="progress-pct" id="prog-pct">0%</div>
+    </div>
+  </div>
+
+  <div class="content" id="content">
+
+    <div class="page active" id="page-dashboard">
+      <div class="greeting">
+        <div class="greeting-time" id="greeting-time">Bom dia</div>
+        <div class="greeting-name">Pronto para mais um dia, Thalia?</div>
+        <div class="greeting-sub" id="greeting-sub">Carregando suas tarefas...</div>
+      </div>
+      <div class="stats-grid" id="dash-stats"></div>
+      <div class="section-header">
+        <div class="section-title">Semana atual</div>
+        <button class="btn-sm" onclick="navTo('cronograma',document.querySelector('[onclick*=cronograma]'))">ver completo</button>
+      </div>
+      <div class="semana-mini" id="semana-mini"></div>
+      <div class="two-col">
+        <div class="panel" id="painel-tarefas-hoje"></div>
+        <div class="panel" id="painel-progresso"></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-cronograma">
+      <div class="section-title">Cronograma</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+        <div class="tab-bar">
+          <div class="tab active" onclick="setCronoTab('semana',this)">Semana</div>
+          <div class="tab" onclick="setCronoTab('mes',this)">Mês</div>
+        </div>
+        <div class="carga-selector">
+          <span class="carga-label">Carga diária:</span>
+          <button class="carga-btn active" onclick="setCarga(1,this)">1h</button>
+          <button class="carga-btn" onclick="setCarga(2,this)">2h</button>
+          <button class="carga-btn" onclick="setCarga(3,this)">3h</button>
+        </div>
+      </div>
+      <div id="crono-semana-view"></div>
+      <div id="crono-mes-view" style="display:none"></div>
+    </div>
+
+    <div class="page" id="page-tarefas">
+      <div class="section-title">Tarefas do Dia</div>
+      <div id="tarefas-hoje-full"></div>
+    </div>
+
+    <div class="page" id="page-materias">
+      <div class="section-title">Matérias</div>
+      <div id="materias-lista"></div>
+    </div>
+
+    <div class="page" id="page-questoes">
+      <div class="section-title">Questões</div>
+      <div id="questoes-area"></div>
+    </div>
+
+    <div class="page" id="page-legislacao">
+      <div class="section-title">Legislação</div>
+      <div class="panel">
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Acesso rápido às principais leis e decretos do edital.</p>
+        <div class="leg-item-row">CTN — Código Tributário Nacional (Lei 5.172/66)</div>
+        <div class="leg-item-row">CF/88 — Arts. 145 a 162 (Sistema Tributário Nacional)</div>
+        <div class="leg-item-row">Decreto 6.759/09 — Regulamento Aduaneiro</div>
+        <div class="leg-item-row">Lei 9.430/96 — IR e CSLL Pessoas Jurídicas</div>
+        <div class="leg-item-row">Lei 9.718/98 — PIS/COFINS</div>
+      </div>
+    </div>
+
+    <div class="page" id="page-upload">
+      <div class="section-title">Upload de PDFs</div>
+      <div id="upload-area"></div>
+    </div>
+
+    <div class="page" id="page-graficos">
+      <div class="section-title">Gráficos e Relatórios</div>
+      <div id="graficos-area"></div>
+    </div>
+
+    <div class="page" id="page-config">
+      <div class="section-title">Configurações</div>
+      <div class="panel">
+        <div class="panel-title">Concurso atual</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;background:rgba(200,168,75,0.08);border:1px solid var(--border);border-radius:10px;margin-bottom:20px">
+          <div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">Analista Tributário — Receita Federal</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px">11 matérias · Banca FGV · Último edital 2022</div>
+          </div>
+          <button class="btn-danger-sm" onclick="if(confirm('Trocar de concurso? Isso apagará todos os dados.')) resetTudo()">Trocar</button>
+        </div>
+        <div class="panel-title">Usuário</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;margin-bottom:20px">
+          <div class="avatar" style="width:44px;height:44px;font-size:16px">TH</div>
+          <div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">Thalia</div>
+            <div style="font-size:12px;color:var(--muted)">Analista Tributário RF</div>
+          </div>
+        </div>
+        <div class="panel-title">Preferências</div>
+        <div class="pref-row"><span>Notificações de estudo</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="pref-row"><span>Som ao completar tarefa</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+        <div class="pref-row"><span>Modo compacto na sidebar</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
