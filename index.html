@@ -15,6 +15,7 @@
 
 <div class="topbar">
   <div class="logo">
+    <button class="hamburger" onclick="toggleMenu()" id="hamburger">☰</button>
     <div class="logo-emblem">SC</div>
     <div>
       <div class="logo-text">STUDYCHAVES</div>
@@ -26,6 +27,7 @@
     <div class="avatar">TH</div>
   </div>
 </div>
+<div class="sidebar-overlay-mobile" id="sidebar-overlay-mobile" onclick="toggleMenu()"></div>
 
 <div class="main">
   <div class="sidebar">
@@ -106,12 +108,14 @@
     <div class="page" id="page-legislacao">
       <div class="section-title">Legislação</div>
       <div class="panel">
-        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Acesso rápido às principais leis e decretos do edital.</p>
-        <div class="leg-item-row">CTN — Código Tributário Nacional (Lei 5.172/66)</div>
-        <div class="leg-item-row">CF/88 — Arts. 145 a 162 (Sistema Tributário Nacional)</div>
-        <div class="leg-item-row">Decreto 6.759/09 — Regulamento Aduaneiro</div>
-        <div class="leg-item-row">Lei 9.430/96 — IR e CSLL Pessoas Jurídicas</div>
-        <div class="leg-item-row">Lei 9.718/98 — PIS/COFINS</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Acesso rápido às principais leis e decretos do edital. Clique para abrir o texto completo.</p>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm','_blank')">CTN — Código Tributário Nacional (Lei 5.172/66) ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm#adct','_blank')">CF/88 — Arts. 145 a 162 (Sistema Tributário Nacional) ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/decreto/d6759.htm','_blank')">Decreto 6.759/09 — Regulamento Aduaneiro ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/leis/l9430.htm','_blank')">Lei 9.430/96 — IR e CSLL Pessoas Jurídicas ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/leis/l9718compilada.htm','_blank')">Lei 9.718/98 — PIS/COFINS ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm','_blank')">LC 123/06 — Simples Nacional ↗</div>
+        <div class="leg-item-row" onclick="window.open('https://www.planalto.gov.br/ccivil_03/leis/l8666cons.htm','_blank')">Lei 8.666/93 — Licitações e Contratos ↗</div>
       </div>
     </div>
 
