@@ -577,7 +577,12 @@ function resetTimer() { clearInterval(STATE.timerInt); STATE.timerSec = 0; if (d
 function fmt(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
 
 // ── UPLOAD ───────────────────────────────────────────────
+const PAGINAS_POR_AULA = 13;
 let filaPDFs = [];
+let pdfsSalvos = JSON.parse(localStorage.getItem('scPDFs') || '[]');
+
+function salvarPDFs() { localStorage.setItem('scPDFs', JSON.stringify(pdfsSalvos)); }
+
 function renderUpload() {
   document.getElementById('upload-area').innerHTML = `
     <div class="panel">
@@ -588,20 +593,28 @@ function renderUpload() {
         <div style="font-size:32px;margin-bottom:10px;opacity:0.5">⬆</div>
         <div class="upload-title">Arraste um ou vários PDFs aqui</div>
         <div style="font-size:12px;color:var(--muted)">ou clique para selecionar · PDF · Máx. 50MB por arquivo</div>
-        <div class="upload-hint">Você pode selecionar vários arquivos de uma vez!</div>
+        <div class="upload-hint">Selecione a matéria e envie — a plataforma divide em aulas automaticamente!</div>
       </div>
       <input type="file" id="fi" accept=".pdf" multiple onchange="onFileSelect(event)" style="display:none">
+
       <div id="config-lote" style="display:none;background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.2);border-radius:10px;padding:16px;margin-bottom:14px">
         <div style="font-size:11px;color:var(--gold-l);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Configurar lote</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px">Matéria</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px">Matéria</label>
             <select id="sel-mat" style="width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:7px;font-size:13px;font-family:'Exo 2',sans-serif">
-              <option value="">Selecione...</option>${MATERIAS.map(m=>`<option>${m.nome}</option>`).join('')}
-            </select></div>
-          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px">Importância</label>
+              <option value="">Selecione a matéria...</option>${MATERIAS.map(m=>`<option>${m.nome}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px">Importância</label>
             <div style="display:flex;align-items:center;gap:6px;padding-top:10px">
               ${[1,2,3,4,5].map(i=>`<span style="font-size:20px;cursor:pointer;color:${i<=3?'var(--gold)':'rgba(255,255,255,0.15)'}" id="lrs${i}" onclick="setLoteRank(${i})">★</span>`).join('')}
-            </div></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--muted)">
+          A plataforma divide o PDF automaticamente em aulas de <strong style="color:var(--gold-l)">1 hora</strong> cada (13 páginas = 1 aula) e distribui no seu cronograma.
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between">
           <span style="font-size:12px;color:var(--muted)" id="lote-count"></span>
@@ -613,10 +626,38 @@ function renderUpload() {
       </div>
       <div id="fila-container"></div>
     </div>
+
     <div class="panel">
-      <div class="panel-title">PDFs na plataforma</div>
-      <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Nenhum PDF enviado ainda. Faça upload acima para começar!</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div class="panel-title" style="margin-bottom:0">PDFs na plataforma</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted)">${pdfsSalvos.length} arquivo${pdfsSalvos.length!==1?'s':''} · ${pdfsSalvos.reduce((a,p)=>a+p.aulas,0)} aulas geradas</span>
+          ${pdfsSalvos.length>0?`<button class="btn btn-outline" style="padding:5px 12px;font-size:11px;color:#F08080;border-color:rgba(224,85,85,0.3)" onclick="if(confirm('Apagar todos os PDFs?')){pdfsSalvos=[];salvarPDFs();renderUpload()}">Limpar tudo</button>`:''}
+        </div>
+      </div>
+      ${pdfsSalvos.length===0
+        ? `<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">Nenhum PDF enviado ainda.<br>Faça upload acima para começar!</div>`
+        : pdfsSalvos.map(p=>`
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;margin-bottom:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(224,85,85,0.15);border:1px solid rgba(224,85,85,0.2);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:#F08080;flex-shrink:0">PDF</div>
+            <div style="flex:1">
+              <div style="font-size:13px;color:var(--text);font-weight:500">${p.nome}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">${p.mat} · ${p.paginas} páginas · ${p.aulas} aula${p.aulas!==1?'s':''} de 1h</div>
+              <div style="display:flex;gap:6px;margin-top:6px">
+                <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(42,92,200,0.2);color:#7BA8F8;border:1px solid rgba(42,92,200,0.3)">${p.mat}</span>
+                <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(92,200,90,0.15);color:#8FE08E;border:1px solid rgba(92,200,90,0.2)">${p.aulas} aula${p.aulas!==1?'s':''} no cronograma</span>
+              </div>
+            </div>
+            <button onclick="excluirPDF('${p.id}')" style="background:transparent;border:1px solid rgba(224,85,85,0.25);color:#F08080;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600">✕</button>
+          </div>`).join('')}
     </div>`;
+}
+
+function excluirPDF(id) {
+  if (!confirm('Excluir este PDF e suas aulas do cronograma?')) return;
+  pdfsSalvos = pdfsSalvos.filter(p => p.id !== id);
+  salvarPDFs();
+  renderUpload();
 }
 
 let loteRank = 3;
@@ -624,37 +665,68 @@ function setLoteRank(n) {
   loteRank = n;
   [1,2,3,4,5].forEach(i => { const el = document.getElementById('lrs'+i); if (el) el.style.color = i<=n?'var(--gold)':'rgba(255,255,255,0.15)'; });
 }
+
 function onDrop(e) { e.preventDefault(); document.getElementById('uz').classList.remove('drag-over'); adicionarArquivos(Array.from(e.dataTransfer.files).filter(f=>f.name.endsWith('.pdf'))); }
 function onFileSelect(e) { adicionarArquivos(Array.from(e.target.files)); e.target.value=''; }
+
 function adicionarArquivos(files) {
-  files.forEach(f => { if (!filaPDFs.find(i=>i.nome===f.name)) filaPDFs.push({id:Date.now()+Math.random(),nome:f.name,size:(f.size/1024/1024).toFixed(1)+' MB',prog:0,status:'aguardando'}); });
+  files.forEach(f => {
+    if (!filaPDFs.find(i=>i.nome===f.name))
+      filaPDFs.push({id:'pdf-'+Date.now()+Math.random(), nome:f.name, size:(f.size/1024/1024).toFixed(1)+' MB', paginas: Math.max(1, Math.round(f.size/1024/8)), prog:0, status:'aguardando'});
+  });
   renderFila();
   const cl = document.getElementById('config-lote'); if (cl) cl.style.display = filaPDFs.length>0?'block':'none';
   const lc = document.getElementById('lote-count'); if (lc) lc.textContent = filaPDFs.length+' arquivo'+(filaPDFs.length>1?'s':'')+' selecionado'+(filaPDFs.length>1?'s':'');
 }
+
 function renderFila() {
   const fc = document.getElementById('fila-container'); if (!fc) return;
-  fc.innerHTML = filaPDFs.map(f=>`
+  fc.innerHTML = filaPDFs.map(f => {
+    const aulas = Math.max(1, Math.ceil(f.paginas / PAGINAS_POR_AULA));
+    return `
     <div style="background:rgba(255,255,255,0.03);border:1px solid ${f.status==='concluido'?'rgba(92,200,90,0.25)':'var(--border)'};border-radius:10px;padding:14px;margin-bottom:8px">
       <div style="display:flex;align-items:center;gap:12px">
         <div style="width:34px;height:34px;border-radius:7px;background:rgba(224,85,85,0.15);border:1px solid rgba(224,85,85,0.2);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:#F08080;flex-shrink:0">PDF</div>
         <div style="flex:1">
           <div style="font-size:13px;color:var(--text);font-weight:500">${f.nome}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">${f.size}</div>
-          <div style="font-size:11px;margin-top:2px;color:${f.status==='concluido'?'#8FE08E':f.status==='processando'?'var(--gold-l)':'var(--muted)'}">${f.status==='aguardando'?'Aguardando...':f.status==='processando'?'Processando — '+Math.round(f.prog)+'%':'Concluído!'}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${f.size} · ~${f.paginas} páginas → ${aulas} aula${aulas!==1?'s':''} de 1h</div>
+          <div style="font-size:11px;margin-top:4px;color:${f.status==='concluido'?'#8FE08E':f.status==='processando'?'var(--gold-l)':'var(--muted)'}">
+            ${f.status==='aguardando'?'Aguardando...':f.status==='processando'?'Processando — '+Math.round(f.prog)+'%':'✓ '+aulas+' aula'+( aulas!==1?'s':'')+' adicionadas ao cronograma!'}
+          </div>
           ${f.status!=='aguardando'?`<div style="height:3px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-top:6px"><div style="height:100%;width:${f.prog}%;background:${f.status==='concluido'?'var(--green)':'linear-gradient(90deg,var(--blue-l),var(--gold))'};border-radius:2px;transition:width 0.3s"></div></div>`:''}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
+
 async function processarFila() {
-  for (const item of filaPDFs.filter(f=>f.status==='aguardando')) {
-    item.status='processando'; item.prog=0; renderFila();
+  const mat = (document.getElementById('sel-mat')||{}).value;
+  if (!mat) { alert('Selecione a matéria antes de enviar!'); return; }
+  const pendentes = filaPDFs.filter(f => f.status === 'aguardando');
+  if (pendentes.length === 0) return;
+  for (const item of pendentes) {
+    item.status = 'processando'; item.prog = 0; renderFila();
     await new Promise(res => {
-      let p=0;
-      const iv=setInterval(()=>{ p+=Math.random()*15+5; if(p>=100){p=100;item.prog=100;item.status='concluido';clearInterval(iv);renderFila();setTimeout(res,300);}else{item.prog=p;renderFila();} },200);
+      let p = 0;
+      const iv = setInterval(() => {
+        p += Math.random() * 15 + 5;
+        if (p >= 100) {
+          p = 100; item.prog = 100; item.status = 'concluido';
+          clearInterval(iv);
+          // Calcula aulas e salva
+          const aulas = Math.max(1, Math.ceil(item.paginas / PAGINAS_POR_AULA));
+          pdfsSalvos.push({id: item.id, nome: item.nome, mat, paginas: item.paginas, aulas, rank: loteRank, data: new Date().toLocaleDateString('pt-BR')});
+          salvarPDFs();
+          renderFila();
+          setTimeout(res, 400);
+        } else { item.prog = p; renderFila(); }
+      }, 200);
     });
   }
+  // Limpa fila e recarrega lista
+  filaPDFs = [];
+  setTimeout(() => renderUpload(), 800);
 }
 
 // ── GRÁFICOS ─────────────────────────────────────────────
